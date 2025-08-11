@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <!-- Background radial nebula -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#06102a"/>
+      <stop offset="40%" stop-color="#0b1b4b"/>
+      <stop offset="70%" stop-color="#24143b"/>
+      <stop offset="100%" stop-color="#0a0720"/>
+    </radialGradient>
+
+    <!-- Halo around the circle -->
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#88b6ff" stop-opacity="0.95"/>
+      <stop offset="40%" stop-color="#5a8eff" stop-opacity="0.9"/>
+      <stop offset="65%" stop-color="#4a5ef0" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#2b1148" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Inner faint inner rim -->
+    <radialGradient id="rim" cx="50%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#bfe0ff" stop-opacity="0.6"/>
+      <stop offset="45%" stop-color="#7fb2ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#3b2a6a" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Cloud texture using a soft linear gradient -->
+    <linearGradient id="cloudG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cbb8ff" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#7e7aff" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#3e2a66" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <!-- subtle grain / vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="75%">
+      <stop offset="60%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+    </radialGradient>
+
+    <!-- soft blur filter for clouds -->
+    <filter id="cloudBlur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="28" result="gblur"/>
+      <feComponentTransfer in="gblur">
+        <feFuncA type="table" tableValues="0 0.85"/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- subtle glow for halo -->
+    <filter id="haloGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="40" result="g1"/>
+      <feMerge><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- star twinkle radial gradient -->
+    <radialGradient id="star" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#c9e6ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- small repeated star pattern (optional) -->
+    <pattern id="tinyStars" width="64" height="64" patternUnits="userSpaceOnUse">
+      <rect width="64" height="64" fill="transparent"/>
+      <circle cx="6" cy="10" r="0.9" fill="#cfe7ff" opacity="0.7"/>
+      <circle cx="28" cy="40" r="0.8" fill="#a8d0ff" opacity="0.6"/>
+      <circle cx="52" cy="18" r="0.7" fill="#ffffff" opacity="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)"/>
+
+  <!-- many stars (manually placed for deterministic look) -->
+  <g id="stars" opacity="0.95">
+    <!-- larger stars with glow -->
+    <circle cx="120" cy="90" r="2.8" fill="url(#star)" opacity="0.95"/>
+    <circle cx="900" cy="150" r="2.4" fill="url(#star)" opacity="0.9"/>
+    <circle cx="760" cy="860" r="3.2" fill="url(#star)" opacity="0.95"/>
+    <circle cx="200" cy="740" r="2.0" fill="url(#star)" opacity="0.85"/>
+    <circle cx="520" cy="60" r="2.6" fill="url(#star)" opacity="0.9"/>
+
+    <!-- medium -->
+    <circle cx="320" cy="240" r="1.5" fill="#dbeeff" opacity="0.85"/>
+    <circle cx="450" cy="180" r="1.2" fill="#bcdcff" opacity="0.75"/>
+    <circle cx="680" cy="340" r="1.6" fill="#eaf6ff" opacity="0.9"/>
+    <circle cx="860" cy="420" r="1.0" fill="#d2e8ff" opacity="0.7"/>
+    <circle cx="110" cy="600" r="1.4" fill="#cfe7ff" opacity="0.8"/>
+    <circle cx="360" cy="820" r="1.1" fill="#e4f1ff" opacity="0.7"/>
+    <circle cx="700" cy="720" r="1.7" fill="#ccddff" opacity="0.9"/>
+
+    <!-- lots of tiny stars using pattern to add depth -->
+    <rect x="0" y="0" width="1024" height="1024" fill="url(#tinyStars)" opacity="0.18"/>
+  </g>
+
+  <!-- halo (outer glow) centered -->
+  <g filter="url(#haloGlow)">
+    <circle cx="512" cy="512" r="300" fill="url(#halo)" />
+  </g>
+
+  <!-- faint rim closer to the circle -->
+  <circle cx="512" cy="512" r="260" fill="url(#rim)" opacity="0.9"/>
+
+  <!-- central black circle (the void) -->
+  <circle cx="512" cy="512" r="220" fill="#000000" />
+
+  <!-- inside-clouds: multiple blurred shapes for depth -->
+  <g filter="url(#cloudBlur)" opacity="0.95" transform="translate(0,6)">
+    <ellipse cx="512" cy="512" rx="150" ry="110" fill="url(#cloudG)" opacity="0.9" />
+    <path d="M400 530 C430 460 530 460 610 520 C580 490 520 480 480 510 C440 540 410 540 400 530 Z" fill="url(#cloudG)" opacity="0.85"/>
+    <path d="M490 470 C520 430 580 430 600 470 C620 520 560 540 520 520 C490 505 470 495 490 470 Z" fill="#b8a8ff" opacity="0.7"/>
+    <ellipse cx="500" cy="550" rx="120" ry="60" fill="#6f62a8" opacity="0.32"/>
+  </g>
+
+  <!-- soft inner edge highlight (thin) -->
+  <circle cx="512" cy="512" r="222" fill="none" stroke="#9fc8ff" stroke-opacity="0.18" stroke-width="6" />
+
+  <!-- subtle swirling rings (faint) -->
+  <g opacity="0.12" stroke="#6a5fb0" stroke-width="6" fill="none">
+    <path d="M512 792 A280 280 0 0 1 792 512" stroke-linecap="round"/>
+    <path d="M512 780 A260 260 0 0 1 772 512" stroke-linecap="round" transform="rotate(12 512 512)"/>
+    <path d="M512 770 A240 240 0 0 1 752 512" stroke-linecap="round" transform="rotate(-8 512 512)"/>
+  </g>
+
+  <!-- vignette overlay -->
+  <rect x="0" y="0" width="1024" height="1024" fill="url(#vignette)" />
+
+  <!-- optional subtle noise using many tiny semi-transparent dots (to give analog feel) -->
+  <g opacity="0.05" fill="#ffffff">
+    <!-- a handful of speckles -->
+    <circle cx="120" cy="210" r="0.7"/>
+    <circle cx="180" cy="310" r="0.6"/>
+    <circle cx="230" cy="810" r="0.6"/>
+    <circle cx="320" cy="120" r="0.5"/>
+    <circle cx="410" cy="600" r="0.6"/>
+    <circle cx="520" cy="140" r="0.5"/>
+    <circle cx="640" cy="540" r="0.7"/>
+    <circle cx="780" cy="260" r="0.5"/>
+    <circle cx="880" cy="720" r="0.6"/>
+    <circle cx="960" cy="430" r="0.5"/>
+  </g>
+</svg>
